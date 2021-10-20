@@ -24,41 +24,15 @@ int main() {
     cin >> n;
     s.resize(n, vector<ll>(n));
     int count = 0;
-    bool lake = true;
-    int i = 0, j = 0;
-    while (count != (n*n + 1) / 2) {
-        if (lake) {
-            if ((i >= 0 && i < n) && (j >= 0 && j < n)) {
-                s[i][j] = count;
-                s[n - i - 1][n - j - 1] = n*n - count - 1;
-                count++;
-                i--;
-                j++;
-            } else {
-                if (j < n) {
-                    i++;
-                    lake = false;
-                } else {
-                    i -= 2;
-                    j--;
-                    lake = false;
-                }
-            }
-        } else {
-            if ((i >= 0 && i < n) && (j >= 0 && j < n)) {
-                s[i][j] = count;
-                s[n - i - 1][n - j - 1] = n*n - count - 1;
-                count++;
-                i++;
-                j--;
-            } else if (i < n) {
-                j++;
-                lake = true;
-            } else {
-                i--;
-                j += 2;
-                lake = true;
-            }
+    int i = 0, j = n;
+    for (int diag = n-1; diag >=0 ; --diag) {
+        j = diag;
+        i = 0;
+        while(i!=n){
+            s[i][(j+n)%n]=count;
+            count++;
+            i++;
+            j--;
         }
     }
     for (int k = 0; k < n; ++k) {
